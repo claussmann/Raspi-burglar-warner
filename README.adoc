@@ -1,0 +1,11 @@
+# Raspi burglar warner
+
+...is a tool, that lets you convert a RaspberryPi into a surveillance camera, 
+which can send pictures of the burgler via Telegram on your phone.
+
+You can also control the camera via Telegram from anywhere on Earth (... if you have Internet respectively).
+
+### Powered by:
+
+This tool uses the well known program "motion" (github.com/Motion-Project/motion). Special thanks to the developers! +
+In Addition this tool would be impossible without the Telegram Bot API! Thank you Telegram!
