@@ -42,5 +42,5 @@ directories: motion_install
 	mkdir -p "$(install_dir)/motion/video"
 	echo -e "\e[92mCreated Directories\e[0m"
 
-motion_config: motion_install
+motion_config: motion_install camera_install
 	bash install_scripts/motion_config.sh
