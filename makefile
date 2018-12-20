@@ -21,4 +21,6 @@ camera_install:
 
 directories:
 	mkdir -p $(install_dir)
-	chown motion:motion $(install_dir)
+	mkdir -p "$(install_dir)/notifier"
+	mkdir -p "$(install_dir)/remote"
+	chown -R motion:motion $(install_dir)
