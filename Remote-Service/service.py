@@ -86,13 +86,13 @@ def isSenderAuthorized(username):
 ########################################################
 def startMotion(chatID):
 	global botToken
-	os.system("motion -c /etc/burglar_warner/motion/motion.conf")
+	subprocess.Popen(["motion", "-c", "/etc/burglar_warner/motion/motion.conf"])
 	url = "https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + str(chatID) + "&text=Motion%20started"
 	subprocess.Popen(["curl", "-s", "-X", "POST", url])
 
 def stopMotion(chatID):
 	global botToken
-	os.system("killall motion")
+	subprocess.Popen(["killall", "motion"])
 	url = "https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + str(chatID) + "&text=Motion%20stopped"
 	subprocess.Popen(["curl", "-s", "-X", "POST", url])
 
