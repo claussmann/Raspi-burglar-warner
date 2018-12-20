@@ -1,4 +1,4 @@
-install_dir = "/burglar_warner"
+install_dir = "/etc/burglar_warner"
 
 install: service_install notifier_install
 
