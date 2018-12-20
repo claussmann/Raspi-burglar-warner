@@ -10,6 +10,8 @@ motion_install:
 
 config: directories motion_config
 	bash install_scripts/config.sh
+	chown -R motion:motion $(install_dir)
+	chmod +x $(install_dir)/remote/run.sh
 	echo -e "\e[92mConfiguration complete\e[0m"
 
 service_install: config sudoers_entry motion_install
@@ -32,7 +34,6 @@ directories: motion_install
 	mkdir -p $(install_dir)
 	mkdir -p "$(install_dir)/notifier"
 	mkdir -p "$(install_dir)/remote"
-	chown -R motion:motion $(install_dir)
 	echo -e "\e[92mCreated Directories\e[0m"
 
 motion_config: motion_install
