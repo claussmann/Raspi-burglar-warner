@@ -11,9 +11,6 @@ motion_install:
 config: directories motion_config
 	bash install_scripts/config.sh
 	chown -R motion:motion $(install_dir)
-	chmod +x $(install_dir)/remote/telegram-remote.sh
-	chmod +x $(install_dir)/notifier/onPicSave.sh
-	chmod +x $(install_dir)/notifier/onMotionDetected.sh
 	echo -e "\e[92mConfiguration complete\e[0m"
 
 service_install: config sudoers_entry motion_install
@@ -21,11 +18,14 @@ service_install: config sudoers_entry motion_install
 	systemctl enable telegram-remote.service
 	cp Remote-Service/telegram-remote.sh $(install_dir)/remote/telegram-remote.sh
 	cp Remote-Service/service.py $(install_dir)/remote/service.py
+	chmod +x $(install_dir)/remote/telegram-remote.sh
 	echo -e "\e[92mInstalled remote service\e[0m"
 
 notifier_install: config motion_install
 	cp Notifier/onMotionDetected.sh $(install_dir)/notifier/onMotionDetected.sh
 	cp Notifier/onPicSave.sh $(install_dir)/notifier/onPicSave.sh
+	chmod +x $(install_dir)/notifier/onPicSave.sh
+	chmod +x $(install_dir)/notifier/onMotionDetected.sh
 	echo -e "\e[92mInstalled notifier service\e[0m"
 
 sudoers_entry:
