@@ -86,7 +86,7 @@ def isSenderAuthorized(username):
 ########################################################
 def startMotion(chatID):
 	global botToken
-	os.system("motion")
+	os.system("motion -c /etc/burglar-warner/motion/motion.conf")
 	url = "https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + str(chatID) + "&text=Motion%20started"
 	subprocess.Popen(["curl", "-s", "-X", "POST", url])
 
