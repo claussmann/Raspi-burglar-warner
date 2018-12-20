@@ -3,7 +3,17 @@ import os
 import json
 import subprocess
 
-
+########################################################
+# main:
+# every 10s:
+#   retrieve latest messages
+#     if new messages:
+#       parse to json
+#       extract username, chatid, messageid and message content
+#       save new id of latest message (otherwise it would process messages twice)
+#       save new offset (offset changes from time to time, max 100 massages can be send at once, see telegram api for details)
+#       call process message
+########################################################
 def main():
 	global offset
 	global lastmsgID
@@ -33,6 +43,17 @@ def main():
 		
 		time.sleep(10)
 
+########################################################
+# processMsg
+# if sender is authorized, the command will be executed.
+# valid commands:
+# /start (start motion)
+# /stop (stop motion)
+# /status (send 'alive-signal')
+# /now (send a picture right now)
+# /poweroff (poweroff the system)
+# /reboot (reboot the system)
+########################################################
 def processMsg(message, username, chatID):
 	if(isSenderAuthorized(username) != True):
 		return
@@ -44,9 +65,9 @@ def processMsg(message, username, chatID):
 		sendStatus(chatID)
 	if(message == "/now"):
 		sendPic(chatID)
-	if(message == "poweroff"):
+	if(message == "/poweroff"):
 		poweroff(chatID)
-	if(message == "reboot"):
+	if(message == "/reboot"):
 		reboot(chatID)
 
 def isSenderAuthorized(username):
