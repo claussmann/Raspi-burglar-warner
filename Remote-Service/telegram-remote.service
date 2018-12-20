@@ -1,0 +1,11 @@
+[Unit]
+Description=Run the telegram remote Control for raspberrypi burglar warner
+After=network.target network-online.target
+
+[Service]
+ExecStart=/etc/burglar_warner/remote/run.sh
+User=motion
+Group=motion
+
+[Install]
+WantedBy=multi-user.target
