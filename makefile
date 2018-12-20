@@ -8,7 +8,7 @@ motion_install:
 	apt-get install motion
 	echo -e "\e[92mInstalled motion\e[0m"
 
-config: directories
+config: directories motion_config
 	bash install_scripts/config.sh
 	echo -e "\e[92mConfiguration complete\e[0m"
 
@@ -26,11 +26,14 @@ sudoers_entry:
 	bash install_scripts/sudoers_config.sh
 
 camera_install:
-	echo -e "\e[92mInstalled camera\e[0m"
+	bash install_scripts/camera.sh
 
-directories:
+directories: motion_install
 	mkdir -p $(install_dir)
 	mkdir -p "$(install_dir)/notifier"
 	mkdir -p "$(install_dir)/remote"
 	chown -R motion:motion $(install_dir)
 	echo -e "\e[92mCreated Directories\e[0m"
+
+motion_config: motion_install
+	bash install_scripts/motion_config.sh
