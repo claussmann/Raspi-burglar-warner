@@ -1,26 +1,36 @@
 install_dir = "/etc/burglar_warner"
 
 install: service_install notifier_install
+	echo -e "\e[92mInstalled!\e[0m"
 
 motion_install:
 	apt-get update
 	apt-get install motion
+	echo -e "\e[92mInstalled motion\e[0m"
 
-config:
+config: directories
+	bash install_scripts/config.sh
+	echo -e "\e[92mConfiguration complete\e[0m"
 
-service_install: config sudoers_entry
+service_install: config sudoers_entry motion_install
 	cp Remote-Service/telegram-remote.service /etc/systemd/system/telegram-remote.service
 	systemctl enable telegram-remote.service
+	cp Remote-Service/run.sh $(install_dir)/remote/run.sh
+	cp Remote-Service/service.py $(install_dir)/remote/service.py
+	echo -e "\e[92mInstalled remote service\e[0m"
 
 notifier_install: config motion_install
+	echo -e "\e[92mInstalled notifier service\e[0m"
 
 sudoers_entry:
 	bash install_scripts/sudoers_config.sh
 
 camera_install:
+	echo -e "\e[92mInstalled camera\e[0m"
 
 directories:
 	mkdir -p $(install_dir)
 	mkdir -p "$(install_dir)/notifier"
 	mkdir -p "$(install_dir)/remote"
 	chown -R motion:motion $(install_dir)
+	echo -e "\e[92mCreated Directories\e[0m"
