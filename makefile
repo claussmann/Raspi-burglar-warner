@@ -34,6 +34,8 @@ directories: motion_install
 	mkdir -p $(install_dir)
 	mkdir -p "$(install_dir)/notifier"
 	mkdir -p "$(install_dir)/remote"
+	mkdir -p "$(install_dir)/motion/pics"
+	mkdir -p "$(install_dir)/motion/video"
 	echo -e "\e[92mCreated Directories\e[0m"
 
 motion_config: motion_install
