@@ -69,7 +69,10 @@ def processMsg(message, username, chatID):
 		poweroff(chatID)
 	if(message == "/reboot"):
 		reboot(chatID)
-
+########################################################
+# isSenderAuthorized
+# returns True if 'username' is included in the File 'authorized'
+########################################################
 def isSenderAuthorized(username):
 	users = open("authorized", "r").read()
 	users = users.split('\n')
@@ -78,9 +81,9 @@ def isSenderAuthorized(username):
 	return False
 
 
-#############################################
+########################################################
 # remote functions
-#############################################
+########################################################
 def startMotion(chatID):
 	global botToken
 	os.system("motion")
@@ -117,9 +120,9 @@ def reboot(chatID):
 
 
 
-#############################################
+########################################################
 # startup and config
-#############################################
+########################################################
 def openConfig():
 	global offset
 	global lastmsgID
