@@ -9,6 +9,8 @@ motion_install:
 config:
 
 service_install: config sudoers_entry
+	cp Remote-Service/telegram-remote.service /etc/systemd/system/telegram-remote.service
+	systemctl enable telegram-remote.service
 
 notifier_install: config motion_install
 
