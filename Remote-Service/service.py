@@ -71,7 +71,11 @@ def processMsg(message, username, chatID):
 		reboot(chatID)
 
 def isSenderAuthorized(username):
-	return username == "claussmann"
+	users = open("authorized", "r").read()
+	users = users.split('\n')
+	if(username != ''):
+		return username in users
+	return False
 
 
 #############################################
