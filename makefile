@@ -1,3 +1,5 @@
+install_dir = "/burglar_warner"
+
 install: service_install notifier_install
 
 motion_install:
@@ -16,3 +18,5 @@ sudoers_entry:
 camera_install:
 
 directories:
+	mkdir -p $(install_dir)
+	chown motion:motion $(install_dir)
