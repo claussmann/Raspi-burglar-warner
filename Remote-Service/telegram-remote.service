@@ -3,7 +3,7 @@ Description=Run the telegram remote Control for raspberrypi burglar warner
 After=network.target network-online.target
 
 [Service]
-ExecStart=/etc/burglar_warner/remote/run.sh
+ExecStart=/etc/burglar_warner/remote/telegram-remote.sh
 User=motion
 Group=motion
 
