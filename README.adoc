@@ -5,6 +5,27 @@ which can send pictures of the burgler via Telegram on your phone.
 
 You can also control the camera via Telegram from anywhere on Earth (... if you have Internet respectively).
 
+## Install
+. Create your telegram bot (see section 'Create telegram bot')
+. Connect your camera to your pi.
+. Best is to have a fresh rasbian install on the sd-card.
+. Run the Raspi-config and do your normal config (expand filesystem, change passwords, wifi,...).
+. Run the Raspi-config and enable the Camera interface.
+. Copy this repository to your pi or clone it with git on your pi.
+. run 
+
+  sudo make install
+  
+You might need to ajust the 
+  
+  /etc/burglar_warner/motion/motion.conf 
+  
+for your setup. +
+The Telegram bot will only start motion with this config file, so you are free to use motion with other config files in other contexts.
+
+## Create telegram bot
+bot father
+
 ### Powered by:
 
 This tool uses the well known program "motion" (github.com/Motion-Project/motion). Special thanks to the developers! +
