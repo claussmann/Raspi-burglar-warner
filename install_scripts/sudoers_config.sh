@@ -1,3 +1,4 @@
+#!/bin/bash
 echo "The service will need to run some commands like poweroff without password."
 read -p "Do you wish the installer to create a sudoers entry for the service?(y/N)" a
 	if [ "$a" = "y" ]

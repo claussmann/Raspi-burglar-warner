@@ -1,3 +1,4 @@
+#!/bin/bash
 read -p "Have you already installed your camera? (y/N)" b
 if [ "$b" != "y" ] 
 then

@@ -1,3 +1,4 @@
+#!/bin/bash
 echo -e "\e[93mNow we will configure your telegram bot.\e[0m"
 echo "The bot's token for the http api is given to you by the botfather."
 echo "The token looks like this: 12345:ABCDE_FG_HI"
