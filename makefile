@@ -24,6 +24,8 @@ service_install: config sudoers_entry motion_install
 notifier_install: config motion_install
 	cp Notifier/onMotionDetected.sh $(install_dir)/notifier/onMotionDetected.sh
 	cp Notifier/onPicSave.sh $(install_dir)/notifier/onPicSave.sh
+	cp Notifier/onMotion.py $(install_dir)/notifier/onMotion.py
+	cp Notifier/onPicSave.py $(install_dir)/notifier/onPicSave.py
 	chmod +x $(install_dir)/notifier/onPicSave.sh
 	chmod +x $(install_dir)/notifier/onMotionDetected.sh
 	echo -e "\e[92mInstalled notifier service\e[0m"
