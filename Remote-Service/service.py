@@ -108,12 +108,14 @@ def poweroff(chatID):
 	global botToken
 	url = "https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + str(chatID) + "&text=Bye"
 	subprocess.Popen(["curl", "-s", "-X", "POST", url])
+	time.sleep(2)
 	os.system("sudo poweroff")
 
 def reboot(chatID):
 	global botToken
 	url = "https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + str(chatID) + "&text=Bye"
 	subprocess.Popen(["curl", "-s", "-X", "POST", url])
+	time.sleep(2)
 	os.system("sudo reboot")
 
 
