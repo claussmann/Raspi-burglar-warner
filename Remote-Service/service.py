@@ -96,6 +96,7 @@ def sendStatus(chatID):
 	sendMsg(chatID, "I am still here.")
 
 def sendPic(chatID):
+	sendMsg(chatID, "One second...")
 	photoLocation = "/etc/burglar_warner/motion/pics/latest_snapshot.jpeg"
 	subprocess.Popen(["raspistill", "-w", "500", "-h", "300", "-q", "90", "-o", photoLocation]).wait()
 	sendImg(chatID, photoLocation)
