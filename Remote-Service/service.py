@@ -106,7 +106,7 @@ def sendPic(chatID):
 	photoLocation = "/etc/burglar_warner/motion/pics/latest_snapshot.jpeg"
 	subprocess.Popen(["raspistill", "-w", "500", "-h", "300", "-q", "90", "-o", photoLocation]).wait()
 	url = "https://api.telegram.org/bot" + botToken + "/sendPhoto"
-	os.system("curl -s -X POST " + url + " -F chat_id=" + chatID + " -F photo='@" + photoLocation + "'")
+	os.system("curl -s -X POST " + url + " -F chat_id=" + str(chatID) + " -F photo='@" + photoLocation + "'")
 
 def poweroff(chatID):
 	global botToken
