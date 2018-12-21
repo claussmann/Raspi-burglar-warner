@@ -85,45 +85,45 @@ def isSenderAuthorized(username):
 # remote functions
 ########################################################
 def startMotion(chatID):
-	global botToken
 	subprocess.Popen(["motion", "-c", "/etc/burglar_warner/motion/motion.conf", "-b"])
-	url = "https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + str(chatID) + "&text=Motion%20started"
-	subprocess.Popen(["curl", "-s", "-X", "POST", url])
+	sendMsg(chatID, "Started.")
 
 def stopMotion(chatID):
-	global botToken
 	subprocess.Popen(["killall", "motion"])
-	url = "https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + str(chatID) + "&text=Motion%20stopped"
-	subprocess.Popen(["curl", "-s", "-X", "POST", url])
+	sendMsg(chatID, "Stopped.")
 
 def sendStatus(chatID):
-	global botToken
-	url = "https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + str(chatID) + "&text=I%20am%20alive"
-	subprocess.Popen(["curl", "-s", "-X", "POST", url])
+	sendMsg(chatID, "I am still here.")
 
 def sendPic(chatID):
-	global botToken
 	photoLocation = "/etc/burglar_warner/motion/pics/latest_snapshot.jpeg"
 	subprocess.Popen(["raspistill", "-w", "500", "-h", "300", "-q", "90", "-o", photoLocation]).wait()
-	url = "https://api.telegram.org/bot" + botToken + "/sendPhoto"
-	os.system("curl -s -X POST " + url + " -F chat_id=" + str(chatID) + " -F photo='@" + photoLocation + "'")
+	sendImg(chatID, photoLocation)
 
 def poweroff(chatID):
-	global botToken
-	url = "https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + str(chatID) + "&text=Bye"
-	subprocess.Popen(["curl", "-s", "-X", "POST", url])
+	sendMsg(chatID, "Bye.")
 	time.sleep(2)
 	os.system("sudo poweroff")
 
 def reboot(chatID):
-	global botToken
-	url = "https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + str(chatID) + "&text=Bye"
-	subprocess.Popen(["curl", "-s", "-X", "POST", url])
+	sendMsg(chatID, "Back soon...")
 	time.sleep(2)
 	os.system("sudo reboot")
 
 
+########################################################
+# methods to send text and photos
+########################################################
+def sendMsg(chatID, msg):
+	global botToken
+	msg = msg.replace(' ', '%20')
+	url = "https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + str(chatID) + "&text=" + msg
+	subprocess.Popen(["curl", "-s", "-X", "POST", url])
 
+def sendImg(chatID, imgPath):
+	global botToken
+	url = "https://api.telegram.org/bot" + botToken + "/sendPhoto"
+	os.system("curl -s -X POST " + url + " -F chat_id=" + str(chatID) + " -F photo='@" + imgPath + "'")
 
 
 ########################################################
