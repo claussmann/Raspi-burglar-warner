@@ -59,6 +59,14 @@ See https://core.telegram.org/bots
   
 . Start a chat with your bot (recommanded BEFORE you install it on the pi)
 
+## Troubleshooting
+
+[quanda]
+I didn't get any response from my bot after install::
+  If your bot started but didn't find any messages yet, it may turn to fail-state (bug...). 
+  Try sending a few times `+/status+` and restart the pi.
+
+
 ### Powered by:
 
 This tool uses the well known program "motion" (github.com/Motion-Project/motion). Special thanks to the developers! +
