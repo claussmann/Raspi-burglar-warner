@@ -91,7 +91,7 @@ def processMsg(message, username, chatID):
 # returns True if 'username' is included in the File 'authorized'
 ########################################################
 def isSenderAuthorized(username):
-	users = open("authorized", "r").read()
+	users = open("/etc/burglar_warner/remote/authorized", "r").read()
 	users = users.split('\n')
 	if(username != ''):
 		return username in users
@@ -171,16 +171,16 @@ def openConfig():
 	global lastmsgID
 	global botToken
 	try:
-		offset = open("offset", "r").read()
+		offset = open("/etc/burglar_warner/remote/offset", "r").read()
 		offset = offset.replace('\n','')
 	except:
 		offset = "0"
 	try:
-		lastmsgID = open("lastmsgID", "r").read()
+		lastmsgID = open("/etc/burglar_warner/remote/lastmsgID", "r").read()
 		lastmsgID = lastmsgID.replace('\n','')
 	except:
 		lastmsgID = 0
-	botToken = open("botToken", "r").read()
+	botToken = open("/etc/burglar_warner/remote/botToken", "r").read()
 	botToken = botToken.replace('\n','')
 
 
