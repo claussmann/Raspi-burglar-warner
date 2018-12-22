@@ -9,7 +9,7 @@ echo "$token" > /etc/burglar_warner/remote/botToken
 
 
 touch /etc/burglar_warner/notifier/chatIDs
-
+touch /etc/burglar_warner/remote/authorized
 
 echo "Now enter telegram-usernames that should be authorized to control the burglar-warner via telegram"
 read -p "Enter a username:" username
