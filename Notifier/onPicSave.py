@@ -1,10 +1,12 @@
+#!/usr/bin/env python3
+
 import subprocess
 import os
 
-botToken = open("botToken", "r").read()
+botToken = open("/etc/burglar_warner/notifier/botToken", "r").read()
 botToken = botToken.replace('\n','')
 
-chatIDs = open("chatIDs", "r").read()
+chatIDs = open("/etc/burglar_warner/notifier/chatIDs", "r").read()
 chatIDs = chatIDs.split('\n')
 
 filesSortedByModifyDate = subprocess.Popen(["ls", "-t", "/etc/burglar_warner/motion/pics"], stdout=subprocess.PIPE).stdout.read()

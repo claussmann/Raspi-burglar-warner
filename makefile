@@ -42,7 +42,7 @@ motion_config: motion_install camera_install
 
 finish: service_install notifier_install
 	@ chown -R motion:motion $(install_dir)
-	@ chmod +x $(install_dir)/notifier/onPicSave.sh
-	@ chmod +x $(install_dir)/notifier/onMotionDetected.sh
+	@ chmod +x $(install_dir)/notifier/onPicSave.py
+	@ chmod +x $(install_dir)/notifier/onMotion.py
 	@ chmod +x $(install_dir)/remote/telegram-remote.sh
 	@ echo "\e[1;92mSet correct rights\e[0m"

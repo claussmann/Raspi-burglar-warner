@@ -1,9 +1,11 @@
+#!/usr/bin/env python3
+
 import subprocess
 
-botToken = open("botToken", "r").read()
+botToken = open("/etc/burglar_warner/notifier/botToken", "r").read()
 botToken = botToken.replace('\n','')
 
-chatIDs = open("chatIDs", "r").read()
+chatIDs = open("/etc/burglar_warner/notifier/chatIDs", "r").read()
 chatIDs = chatIDs.split('\n')
 
 for chatID in chatIDs:
