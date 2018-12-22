@@ -80,6 +80,10 @@ def processMsg(message, username, chatID):
 		poweroff(chatID)
 	if(message == "/reboot"):
 		reboot(chatID)
+	if(message == "/subscribe"):
+		subscribe(chatID)
+	if(message == "/unsubscribe"):
+		unsubscribe(chatID)
 ########################################################
 # isSenderAuthorized
 # returns True if 'username' is included in the File 'authorized'
@@ -122,6 +126,25 @@ def reboot(chatID):
 	time.sleep(2)
 	os.system("sudo reboot")
 
+def subscribe(chatID):
+	chatIDs = open("/etc/burglar_warner/notifier/chatIDs", "r").read()
+	chatIDs = chatIDs.split('\n')
+	if(str(chatID) not in chatIDs):
+		chatIDs.append(str(chatID))
+		open("/etc/burglar_warner/notifier/chatIDs", "w+").write("\n".join(chatIDs))
+		sendMsg(chatID, "Subscribed.")
+	else:
+		sendMsg(chatID, "Already subscribed")
+
+def unsubscribe(chatID):
+	chatIDs = open("/etc/burglar_warner/notifier/chatIDs", "r").read()
+	chatIDs = chatIDs.split('\n')
+	if(str(chatID) in chatIDs):
+		chatIDs.remove(str(chatID))
+		open("/etc/burglar_warner/notifier/chatIDs", "w+").write("\n".join(chatIDs))
+		sendMsg(chatID, "Removed")
+	else:
+		sendMsg(chatID, "You are no subscriber")
 
 ########################################################
 # methods to send text and photos
