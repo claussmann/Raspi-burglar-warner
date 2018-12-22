@@ -67,7 +67,7 @@ I didn't get any response from my bot after install::
   Try sending a few times `+/status+` and restart the pi.
 
 
-### Powered by:
+## Powered by:
 
 This tool uses the well known program "motion" (github.com/Motion-Project/motion). Special thanks to the developers! +
 In Addition this tool would be impossible without the Telegram Bot API! Thank you Telegram!
