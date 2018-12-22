@@ -6,42 +6,53 @@ import subprocess
 ########################################################
 # main:
 # every 10s:
-#   retrieve latest messages
+#   retrieve latest messag
 #     if new messages:
-#       parse to json
 #       extract username, chatid, messageid and message content
 #       save new id of latest message (otherwise it would process messages twice)
-#       save new offset (offset changes from time to time, max 100 massages can be send at once, see telegram api for details)
 #       call process message
 ########################################################
 def main():
-	global offset
 	global lastmsgID
-	global botToken
+	while(1): 
+		message = getLatestMessage()
+		if(message != ""):
+			if(message["message"]["message_id"] > int(lastmsgID)):
+				username = message["message"]["from"]["username"]
+				chatID = message["message"]["chat"]["id"]
+				content = message["message"]["text"]
+				lastmsgID = message["message"]["message_id"]
+				open("lastmsgID", "w+").write(str(lastmsgID))
+				processMsg(content, username, chatID)
+		time.sleep(10)
 
-	while(1):
-		url = "https://api.telegram.org/bot" + botToken + "/getUpdates?offset=" + offset
-		response = subprocess.Popen(["curl", "-s", "-X", "POST", url], stdout=subprocess.PIPE).stdout.read()
+
+def getLatestMessage():
+	global offset
+	global botToken
+	url = "https://api.telegram.org/bot" + botToken + "/getUpdates?offset=" + offset
+	response = subprocess.Popen(["curl", "-s", "-X", "POST", url], stdout=subprocess.PIPE).stdout.read()
+	try:
 		data = json.loads(response)
-		if(data["ok"] == True):
-			result = data["result"]
-			if(result[-1]["message"]["message_id"] <= int(lastmsgID)):
-				continue
-			username = result[-1]["message"]["from"]["username"]
-			chatID = result[-1]["message"]["chat"]["id"]
-			message = result[-1]["message"]["text"]
-			lastmsgID = result[-1]["message"]["message_id"]
-			open("lastmsgID", "w+").write(str(lastmsgID))
+	except:
+		return ""
+	if(data["ok"] == True):
+			result = data["result"][-1]
 			try:
-				newOffset = str(result[-1]["message"]["entities"][-1]["offset"])
+				newOffset = str(result["message"]["entities"][-1]["offset"])
 				if(newOffset != offset):
 					offset = newOffset
 					open("offset", "w+").write(str(offset))
 			except KeyError:
-				continue
-			processMsg(message, username, chatID)
-		
-		time.sleep(10)
+				pass
+			return result
+	else:
+		print("Error. Cannot recieve messages")
+		return ""
+
+
+
+
 
 ########################################################
 # processMsg
