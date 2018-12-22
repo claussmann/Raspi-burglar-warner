@@ -5,9 +5,16 @@ which can send pictures of the burgler via Telegram on your phone.
 
 You can also control the camera via Telegram from anywhere on Earth (... if you have Internet respectively).
 
+## What do i need?
+
+. RaspberryPi (Model >= 2)
+. Camera (best would be the official Pi-Camera or PiNoIr, otherwise you will need to configure it by yourself)
+. Telegram account WITH username
+. SD-Card with Rasbian (Desktop is not necessary)
+
 ## Install
 . Create your telegram bot (see section 'Create telegram bot')
-. Connect your camera to your pi.
+. Connect the camera to your pi.
 . Best is to have a fresh rasbian install on the sd-card.
 . Run the Raspi-config and do your normal config (expand filesystem, change passwords, wifi,...).
 . Run the Raspi-config and enable the Camera interface.
@@ -50,7 +57,7 @@ See https://core.telegram.org/bots
   subscribe - get notifications when motion is detected
   unsubscribe - no longer get notifications
   
-
+. Start a chat with your bot (recommanded BEFORE you install it on the pi)
 
 ### Powered by:
 
