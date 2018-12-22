@@ -25,7 +25,32 @@ You can also control the camera via Telegram from anywhere on Earth (... if you 
 . If you get response(may take about 10s), everything works fine. Otherwise see syslog for information.
 
 ## Create telegram bot
-bot father
+
+See https://core.telegram.org/bots
+
+. Open a chat with the BotFather
+. create a new bot using 
+  
+  /newbot
+  
+. follow the instructions of BotFather
+. You will get a *Token* which you will need later!
+. I recommend to use /setcommands to tell BotFather which comands are supported
+
+  /setcommands
+  <choose botname>
+  @botname
+  <enter commands>
+  start - start motion detection
+  stop - stop motion detection
+  status - see if bot is reachable
+  reboot - reboots the system
+  poweroff - shuts down the system
+  now - take a picture now and send it
+  subscribe - get notifications when motion is detected
+  unsubscribe - no longer get notifications
+  
+
 
 ### Powered by:
 
