@@ -5,9 +5,16 @@ which can send pictures of the burgler via Telegram on your phone.
 
 You can also control the camera via Telegram from anywhere on Earth (... if you have Internet respectively).
 
+## What do i need?
+
+. RaspberryPi (Model >= 2)
+. Camera (best would be the official Pi-Camera or PiNoIr, otherwise you will need to configure it by yourself)
+. Telegram account WITH username
+. SD-Card with Rasbian (Desktop is not necessary)
+
 ## Install
 . Create your telegram bot (see section 'Create telegram bot')
-. Connect your camera to your pi.
+. Connect the camera to your pi.
 . Best is to have a fresh rasbian install on the sd-card.
 . Run the Raspi-config and do your normal config (expand filesystem, change passwords, wifi,...).
 . Run the Raspi-config and enable the Camera interface.
@@ -16,15 +23,41 @@ You can also control the camera via Telegram from anywhere on Earth (... if you 
 
   sudo make install
   
-You might need to ajust the 
+. For your specific setup, you might need to ajust the 
   
   /etc/burglar_warner/motion/motion.conf 
   
-for your setup. +
-The Telegram bot will only start motion with this config file, so you are free to use motion with other config files in other contexts.
+. Reboot your pi.
+. Write a telegram message (e.g. /status) to your telegram bot.
+. If you get response(may take about 10s), everything works fine. Otherwise see syslog for information.
 
 ## Create telegram bot
-bot father
+
+See https://core.telegram.org/bots
+
+. Open a chat with the BotFather
+. create a new bot using 
+  
+  /newbot
+  
+. follow the instructions of BotFather
+. You will get a *Token* which you will need later!
+. I recommend to use /setcommands to tell BotFather which comands are supported
+
+  /setcommands
+  <choose botname>
+  @botname
+  <enter commands>
+  start - start motion detection
+  stop - stop motion detection
+  status - see if bot is reachable
+  reboot - reboots the system
+  poweroff - shuts down the system
+  now - take a picture now and send it
+  subscribe - get notifications when motion is detected
+  unsubscribe - no longer get notifications
+  
+. Start a chat with your bot (recommanded BEFORE you install it on the pi)
 
 ### Powered by:
 
