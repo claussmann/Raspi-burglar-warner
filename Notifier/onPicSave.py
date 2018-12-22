@@ -10,10 +10,10 @@ chatIDs = open("/etc/burglar_warner/notifier/chatIDs", "r").read()
 chatIDs = chatIDs.split('\n')
 
 filesSortedByModifyDate = subprocess.Popen(["ls", "-t", "/etc/burglar_warner/motion/pics"], stdout=subprocess.PIPE).stdout.read()
-filesSortedByModifyDate = filesSortedByModifyDate.split('\n')
+filesSortedByModifyDate = filesSortedByModifyDate.splitlines()
 
 lastModified = filesSortedByModifyDate [0]
-lastModified = "/etc/burglar_warner/motion/pics/" + lastModified
+lastModified = "/etc/burglar_warner/motion/pics/" + lastModified.decode("utf-8")
 
 for chatID in chatIDs:
 	url = "https://api.telegram.org/bot" + botToken + "/sendPhoto"
