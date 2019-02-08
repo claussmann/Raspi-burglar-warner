@@ -65,6 +65,9 @@ See https://core.telegram.org/bots
 I didn't get any response from my bot after install::
   If your bot started but didn't find any messages yet, it may turn to fail-state (bug...). 
   Try sending a few times `+/status+` and restart the pi.
+  
+Motion is running but i don't get any messages from it::
+  Have you already subscribed to these messages? Try sending `+/subscribe+` to the bot.
 
 
 ## Powered by:
