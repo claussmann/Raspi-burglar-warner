@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python3
 
 import time
 import os
@@ -26,7 +26,7 @@ def main():
 				chatID = message["message"]["chat"]["id"]
 				content = message["message"]["text"]
 				lastmsgID = message["message"]["message_id"]
-				config['Telegram']['LastMsgID'] = lastmsgID
+				config['Telegram']['LastMsgID'] = str(lastmsgID)
 				with open('/etc/burglar_warner/Burglar-Warner.conf', 'w') as configfile:
 					config.write(configfile)
 				processMsg(content, username, chatID)
@@ -40,7 +40,7 @@ def getLatestMessage():
 	url = "https://api.telegram.org/bot" + botToken + "/getUpdates?offset=" + offset
 	response = subprocess.Popen(["curl", "-s", "-X", "POST", url], stdout=subprocess.PIPE).stdout.read()
 	try:
-		data = json.loads(response)
+		data = json.loads(response.decode('utf-8'))
 	except:
 		return ""
 	if(data["ok"] == True):
@@ -76,7 +76,7 @@ def getLatestMessage():
 ########################################################
 def processMsg(message, username, chatID):
 	global authorized
-	if(username in authorized):
+	if(username not in authorized):
 		return
 	if(message == "/start"):
 		startMotion(chatID)
@@ -128,10 +128,10 @@ def reboot(chatID):
 
 def subscribe(chatID):
 	global config
-	chatIDs = config['Telegram']['Subscribers']
+	chatIDs = eval(config['Telegram']['Subscribers'])
 	if(str(chatID) not in chatIDs):
 		chatIDs.append(str(chatID))
-		config['Telegram']['Subscribers'] = chatIDs
+		config['Telegram']['Subscribers'] = str(chatIDs)
 		with open('/etc/burglar_warner/Burglar-Warner.conf', 'w') as configfile:
 			config.write(configfile)
 		sendMsg(chatID, "Subscribed.")
@@ -140,10 +140,10 @@ def subscribe(chatID):
 
 def unsubscribe(chatID):
 	global config
-	chatIDs = config['Telegram']['Subscribers']
+	chatIDs = eval(config['Telegram']['Subscribers'])
 	if(str(chatID) in chatIDs):
 		chatIDs.remove(str(chatID))
-		config['Telegram']['Subscribers'] = chatIDs
+		config['Telegram']['Subscribers'] = str(chatIDs)
 		with open('/etc/burglar_warner/Burglar-Warner.conf', 'w') as configfile:
 			config.write(configfile)
 		sendMsg(chatID, "Removed")
@@ -155,7 +155,7 @@ def unsubscribe(chatID):
 ########################################################
 def sendMsg(chatID, msg):
 	global botToken
-	quote_plus(message)
+	msg = quote_plus(msg)
 	url = "https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + str(chatID) + "&text=" + msg
 	subprocess.Popen(["curl", "-s", "-X", "POST", url])
 
@@ -179,7 +179,7 @@ def openConfig():
 	botToken = config['Telegram']['BotToken']
 	offset = config['Telegram']['Offset']
 	lastmsgID = config['Telegram']['LastMsgID']
-	authorized = config['Telegram']['Authorized']
+	authorized = eval(config['Telegram']['Authorized'])
 
 openConfig()
 main()
