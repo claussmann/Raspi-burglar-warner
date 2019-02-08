@@ -159,7 +159,7 @@ def unsubscribe(chatID):
 ########################################################
 def sendMsg(chatID, msg):
 	global botToken
-	msg = msg.replace(' ', '%20')
+	quote_plus(message)
 	url = "https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + str(chatID) + "&text=" + msg
 	subprocess.Popen(["curl", "-s", "-X", "POST", url])
 
