@@ -29,7 +29,7 @@ You can also control the camera via Telegram from anywhere on Earth (... if you 
   
 . Reboot your pi.
 . Write a telegram message (e.g. /status) to your telegram bot.
-. If you get response(may take about 10s), everything works fine. Otherwise see syslog for information.
+. If you get response (may take about 10s), everything works fine. Otherwise see syslog for information.
 
 ## Create telegram bot
 
@@ -57,7 +57,7 @@ See https://core.telegram.org/bots
   subscribe - get notifications when motion is detected
   unsubscribe - no longer get notifications
   
-. Start a chat with your bot (recommanded BEFORE you install it on the pi)
+. Start a chat with your bot (recommended BEFORE you install it on the pi)
 
 ## Troubleshooting
 
