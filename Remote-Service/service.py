@@ -26,7 +26,9 @@ def main():
 				chatID = message["message"]["chat"]["id"]
 				content = message["message"]["text"]
 				lastmsgID = message["message"]["message_id"]
-				open("lastmsgID", "w+").write(str(lastmsgID))
+				config['Telegram']['LastMsgID'] = lastmsgID
+				with open('/etc/burglar_warner/Burglar-Warner.conf', 'w') as configfile:
+					config.write(configfile)
 				processMsg(content, username, chatID)
 		time.sleep(10)
 
@@ -34,6 +36,7 @@ def main():
 def getLatestMessage():
 	global offset
 	global botToken
+	global config
 	url = "https://api.telegram.org/bot" + botToken + "/getUpdates?offset=" + offset
 	response = subprocess.Popen(["curl", "-s", "-X", "POST", url], stdout=subprocess.PIPE).stdout.read()
 	try:
@@ -43,12 +46,14 @@ def getLatestMessage():
 	if(data["ok"] == True):
 			result = data["result"][-1]
 			try:
-				newOffset = str(result["message"]["entities"][-1]["offset"])
+				newOffset = str(result["update_id"])
 				if(newOffset != offset):
 					offset = newOffset
-					open("offset", "w+").write(str(offset))
+					config['Telegram']['Offset'] = offset
+					with open('/etc/burglar_warner/Burglar-Warner.conf', 'w') as configfile:
+						config.write(configfile)
 			except KeyError:
-				pass
+				return ""
 			return result
 	else:
 		print("Error. Cannot recieve messages")
@@ -70,7 +75,8 @@ def getLatestMessage():
 # /reboot (reboot the system)
 ########################################################
 def processMsg(message, username, chatID):
-	if(isSenderAuthorized(username) != True):
+	global authorized
+	if(username in authorized):
 		return
 	if(message == "/start"):
 		startMotion(chatID)
@@ -88,16 +94,6 @@ def processMsg(message, username, chatID):
 		subscribe(chatID)
 	if(message == "/unsubscribe"):
 		unsubscribe(chatID)
-########################################################
-# isSenderAuthorized
-# returns True if 'username' is included in the File 'authorized'
-########################################################
-def isSenderAuthorized(username):
-	users = open("/etc/burglar_warner/remote/authorized", "r").read()
-	users = users.split('\n')
-	if(username != ''):
-		return username in users
-	return False
 
 
 ########################################################
@@ -176,12 +172,14 @@ def openConfig():
 	global offset
 	global lastmsgID
 	global botToken
+	global authorized
 	global config
 	config = configparser.ConfigParser()
 	config.read('/etc/burglar_warner/Burglar-Warner.conf')
 	botToken = config['Telegram']['BotToken']
 	offset = config['Telegram']['Offset']
 	lastmsgID = config['Telegram']['LastMsgID']
+	authorized = config['Telegram']['Authorized']
 
 openConfig()
 main()
