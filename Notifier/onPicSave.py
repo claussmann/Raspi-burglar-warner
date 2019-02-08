@@ -2,12 +2,14 @@
 
 import subprocess
 import os
+import configparser
 
-botToken = open("/etc/burglar_warner/notifier/botToken", "r").read()
-botToken = botToken.replace('\n','')
+config = configparser.ConfigParser()
+config.read('/etc/burglar_warner/Burglar-Warner.conf')
 
-chatIDs = open("/etc/burglar_warner/notifier/chatIDs", "r").read()
-chatIDs = chatIDs.split('\n')
+botToken = config['Telegram']['BotToken']
+
+chatIDs = config['Telegram']['Subscribers']
 
 filesSortedByModifyDate = subprocess.Popen(["ls", "-t", "/etc/burglar_warner/motion/pics"], stdout=subprocess.PIPE).stdout.read()
 filesSortedByModifyDate = filesSortedByModifyDate.splitlines()

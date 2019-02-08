@@ -4,6 +4,8 @@ import time
 import os
 import json
 import subprocess
+import configparser
+from urllib.parse import quote_plus
 
 ########################################################
 # main:
@@ -129,21 +131,25 @@ def reboot(chatID):
 	os.system("sudo reboot")
 
 def subscribe(chatID):
-	chatIDs = open("/etc/burglar_warner/notifier/chatIDs", "r").read()
-	chatIDs = chatIDs.split('\n')
+	global config
+	chatIDs = config['Telegram']['Subscribers']
 	if(str(chatID) not in chatIDs):
 		chatIDs.append(str(chatID))
-		open("/etc/burglar_warner/notifier/chatIDs", "w+").write("\n".join(chatIDs))
+		config['Telegram']['Subscribers'] = chatIDs
+		with open('/etc/burglar_warner/Burglar-Warner.conf', 'w') as configfile:
+			config.write(configfile)
 		sendMsg(chatID, "Subscribed.")
 	else:
 		sendMsg(chatID, "Already subscribed")
 
 def unsubscribe(chatID):
-	chatIDs = open("/etc/burglar_warner/notifier/chatIDs", "r").read()
-	chatIDs = chatIDs.split('\n')
+	global config
+	chatIDs = config['Telegram']['Subscribers']
 	if(str(chatID) in chatIDs):
 		chatIDs.remove(str(chatID))
-		open("/etc/burglar_warner/notifier/chatIDs", "w+").write("\n".join(chatIDs))
+		config['Telegram']['Subscribers'] = chatIDs
+		with open('/etc/burglar_warner/Burglar-Warner.conf', 'w') as configfile:
+			config.write(configfile)
 		sendMsg(chatID, "Removed")
 	else:
 		sendMsg(chatID, "You are no subscriber")
@@ -170,19 +176,12 @@ def openConfig():
 	global offset
 	global lastmsgID
 	global botToken
-	try:
-		offset = open("/etc/burglar_warner/remote/offset", "r").read()
-		offset = offset.replace('\n','')
-	except:
-		offset = "0"
-	try:
-		lastmsgID = open("/etc/burglar_warner/remote/lastmsgID", "r").read()
-		lastmsgID = lastmsgID.replace('\n','')
-	except:
-		lastmsgID = 0
-	botToken = open("/etc/burglar_warner/remote/botToken", "r").read()
-	botToken = botToken.replace('\n','')
-
+	global config
+	config = configparser.ConfigParser()
+	config.read('/etc/burglar_warner/Burglar-Warner.conf')
+	botToken = config['Telegram']['BotToken']
+	offset = config['Telegram']['Offset']
+	lastmsgID = config['Telegram']['LastMsgID']
 
 openConfig()
 main()
