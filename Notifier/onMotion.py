@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 
 import subprocess
+import configparser
 
-botToken = open("/etc/burglar_warner/notifier/botToken", "r").read()
-botToken = botToken.replace('\n','')
+config = configparser.ConfigParser()
+config.read('/etc/burglar_warner/Burglar-Warner.conf')
 
-chatIDs = open("/etc/burglar_warner/notifier/chatIDs", "r").read()
-chatIDs = chatIDs.split('\n')
+botToken = config['Telegram']['BotToken']
+
+chatIDs = config['Telegram']['Subscribers']
 
 for chatID in chatIDs:
 	url = "https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + str(chatID) + "&text=I%20think%20there%20is%20somethig..."

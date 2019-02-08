@@ -10,7 +10,7 @@ motion_install:
 	@ echo "\e[1;92mInstalled motion\e[0m"
 
 config: directories motion_config
-	@ bash install_scripts/config.sh
+	@ python3 install_scripts/config.py
 	@ echo "\e[1;92mConfiguration complete\e[0m"
 
 service_install: config sudoers_entry motion_install
