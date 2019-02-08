@@ -8,7 +8,7 @@ config.read('/etc/burglar_warner/Burglar-Warner.conf')
 
 botToken = config['Telegram']['BotToken']
 
-chatIDs = config['Telegram']['Subscribers']
+chatIDs = eval(config['Telegram']['Subscribers'])
 
 for chatID in chatIDs:
 	url = "https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + str(chatID) + "&text=I%20think%20there%20is%20somethig..."

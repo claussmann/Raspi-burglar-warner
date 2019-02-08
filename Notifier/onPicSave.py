@@ -9,7 +9,7 @@ config.read('/etc/burglar_warner/Burglar-Warner.conf')
 
 botToken = config['Telegram']['BotToken']
 
-chatIDs = config['Telegram']['Subscribers']
+chatIDs = eval(config['Telegram']['Subscribers'])
 
 filesSortedByModifyDate = subprocess.Popen(["ls", "-t", "/etc/burglar_warner/motion/pics"], stdout=subprocess.PIPE).stdout.read()
 filesSortedByModifyDate = filesSortedByModifyDate.splitlines()
